@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>域名、SSL 与备案那些事 — 午后笔记</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bg:#faf9f7; --text:#1a1a1a; --muted:#888; --border:#e8e5e0; --link:#555; }
+body { background:var(--bg); color:var(--text); font-family:'Noto Serif SC',serif; line-height:1.9; padding:0 24px; }
+.container { max-width:660px; margin:0 auto; }
+header { padding:40px 0 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.site-name { font-family:'Lora',serif; font-size:20px; font-weight:500; }
+.site-name a { color:var(--text); text-decoration:none; }
+nav { display:flex; gap:24px; }
+nav a { font-size:13px; color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s,color .2s; }
+nav a:hover { color:var(--text); border-bottom-color:var(--text); }
+.post-header { padding:60px 0 40px; border-bottom:1px solid var(--border); }
+.post-meta { font-size:12px; color:var(--muted); margin-bottom:16px; display:flex; gap:16px; }
+.post-tag { background:var(--border); padding:1px 8px; border-radius:2px; }
+.post-title { font-family:'Lora',serif; font-size:32px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; }
+.post-body { padding:48px 0 60px; font-size:16px; font-weight:300; color:#333; }
+.post-body p { margin-bottom:24px; }
+.post-body h2 { font-family:'Lora',serif; font-size:22px; font-weight:500; margin:48px 0 16px; color:var(--text); }
+.post-body blockquote { border-left:2px solid var(--border); padding-left:20px; color:var(--muted); font-style:italic; margin:32px 0; }
+.post-body code { background:#f0ede9; padding:2px 6px; border-radius:2px; font-size:14px; font-family:'DM Mono',monospace; }
+.post-body pre { background:#f0ede9; padding:20px 24px; border-radius:4px; margin:24px 0; overflow-x:auto; }
+.post-body pre code { background:none; padding:0; }
+.post-nav { border-top:1px solid var(--border); padding:40px 0; display:flex; justify-content:space-between; gap:24px; }
+.post-nav a { font-size:14px; color:var(--link); text-decoration:none; transition:color .2s; max-width:45%; }
+.post-nav a:hover { color:var(--text); }
+.post-nav .label { font-size:11px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+footer { border-top:1px solid var(--border); padding:40px 0; display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+footer a { color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); }
+footer a:hover { color:var(--text); }
+@media(max-width:600px){ .post-title{font-size:24px;} header{flex-direction:column;align-items:flex-start;gap:16px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="site-name"><a href="index.html">午后笔记</a></div>
+    <nav>
+      <a href="index.html">文章</a>
+      <a href="#">归档</a>
+      <a href="#">关于</a>
+    </nav>
+  </header>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span>2025 年 08 月 11 日</span>
+      <span class="post-tag">技术</span>
+    </div>
+    <h1 class="post-title">域名、SSL 与备案那些事</h1>
+  </div>
+
+  <div class="post-body">
+    
+    <p>打算自己搭一个网站，会遇到三个绕不开的问题：域名怎么注册、HTTPS 怎么配置、国内服务器要不要备案。这篇文章把这三件事捋一遍。</p>
+
+    <h2>域名注册</h2>
+    <p>域名是你网站的地址，比如 <code>example.com</code>。注册域名需要每年付费，常见后缀的价格差异很大：<code>.com</code> 大约每年 10–15 美元，<code>.cn</code> 在国内平台大约 29–79 元，而 <code>.top</code>、<code>.xyz</code> 这类新后缀首年可能只要几块钱，但续费价格要看清楚。</p>
+    <p>推荐在 Namecheap、Cloudflare Registrar 或国内的阿里云、腾讯云注册。Cloudflare 的优势是以成本价出售域名，没有额外利润加成。</p>
+
+    <h2>SSL 证书（HTTPS）</h2>
+    <p>现在几乎没有理由不用 HTTPS。Let's Encrypt 提供免费的 DV 证书，有效期 90 天，可以自动续期。如果你用 Vercel、Netlify 或 Cloudflare 部署网站，他们会自动帮你配置好证书，完全不需要手动操作。</p>
+    <p>自己管服务器的话，用 Certbot 工具可以一条命令搞定：</p>
+    <pre><code>certbot --nginx -d yourdomain.com</code></pre>
+    <p>付费的 OV/EV 证书主要用于银行、支付等对信任要求极高的场景，普通网站没有必要。</p>
+
+    <h2>ICP 备案</h2>
+    <p>如果你的服务器在中国大陆，网站必须完成 ICP 备案才能正常访问。备案本身免费，但流程繁琐，需要提交域名证书、服务器证明、个人或企业材料，审核周期通常 1–4 周。</p>
+    <p>如果想绕开备案，可以把服务器放在香港或海外，但访问速度可能受影响。用 GitHub Pages、Vercel 等境外平台托管静态网站是个不需要备案的好选择。</p>
+    
+  </div>
+
+  <div class="post-nav"><a href="post-book.html"><div class="label">← 上一篇</div>读《置身事内》</a></div>
+
+  <footer>
+    <span>© 2025 午后笔记</span>
+    <span><a href="#">GitHub</a>&nbsp;·&nbsp;<a href="#">邮件联系</a></span>
+  </footer>
+</div>
+</body>
+</html>

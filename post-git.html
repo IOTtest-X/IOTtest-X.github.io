@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Git 工作流的几种选择与取舍 — 午后笔记</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bg:#faf9f7; --text:#1a1a1a; --muted:#888; --border:#e8e5e0; --link:#555; }
+body { background:var(--bg); color:var(--text); font-family:'Noto Serif SC',serif; line-height:1.9; padding:0 24px; }
+.container { max-width:660px; margin:0 auto; }
+header { padding:40px 0 32px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.site-name { font-family:'Lora',serif; font-size:20px; font-weight:500; }
+.site-name a { color:var(--text); text-decoration:none; }
+nav { display:flex; gap:24px; }
+nav a { font-size:13px; color:var(--link); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s,color .2s; }
+nav a:hover { color:var(--text); border-bottom-color:var(--text); }
+.post-header { padding:60px 0 40px; border-bottom:1px solid var(--border); }
+.post-meta { font-size:12px; color:var(--muted); margin-bottom:16px; display:flex; gap:16px; }
+.post-tag { background:var(--border); padding:1px 8px; border-radius:2px; }
+.post-title { font-family:'Lora',serif; font-size:32px; font-weight:500; line-height:1.4; letter-spacing:-0.01em; }
+.post-body { padding:48px 0 60px; font-size:16px; font-weight:300; color:#333; }
+.post-body p { margin-bottom:24px; }
+.post-body h2 { font-family:'Lora',serif; font-size:22px; font-weight:500; margin:48px 0 16px; color:var(--text); }
+.post-body blockquote { border-left:2px solid var(--border); padding-left:20px; color:var(--muted); font-style:italic; margin:32px 0; }
+.post-body code { background:#f0ede9; padding:2px 6px; border-radius:2px; font-size:14px; font-family:'DM Mono',monospace; }
+.post-body pre { background:#f0ede9; padding:20px 24px; border-radius:4px; margin:24px 0; overflow-x:auto; }
+.post-body pre code { background:none; padding:0; }
+.post-nav { border-top:1px solid var(--border); padding:40px 0; display:flex; justify-content:space-between; gap:24px; }
+.post-nav a { font-size:14px; color:var(--link); text-decoration:none; transition:color .2s; max-width:45%; }
+.post-nav a:hover { color:var(--text); }
+.post-nav .label { font-size:11px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+footer { border-top:1px solid var(--border); padding:40px 0; display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+footer a { color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); }
+footer a:hover { color:var(--text); }
+@media(max-width:600px){ .post-title{font-size:24px;} header{flex-direction:column;align-items:flex-start;gap:16px;} }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="site-name"><a href="index.html">午后笔记</a></div>
+    <nav>
+      <a href="index.html">文章</a>
+      <a href="#">归档</a>
+      <a href="#">关于</a>
+    </nav>
+  </header>
+
+  <div class="post-header">
+    <div class="post-meta">
+      <span>2025 年 11 月 02 日</span>
+      <span class="post-tag">技术</span>
+    </div>
+    <h1 class="post-title">Git 工作流的几种选择与取舍</h1>
+  </div>
+
+  <div class="post-body">
+    
+    <p>在团队协作中，选择合适的 Git 工作流往往比选择某个具体工具更重要。工作流决定了代码如何流动、冲突如何解决、发布如何协调。没有"最好"的工作流，只有"最适合当前团队"的工作流。</p>
+
+    <h2>Git Flow</h2>
+    <p>Git Flow 是最经典也最"重"的方案，由 Vincent Driessen 在 2010 年提出。它定义了严格的分支结构：<code>main</code>、<code>develop</code>、<code>feature/*</code>、<code>release/*</code>、<code>hotfix/*</code>。</p>
+    <p>适合有明确版本号、需要维护多个发布版本的软件，比如桌面应用或 SDK。但对于快速迭代的 Web 应用来说，这套流程显得过于繁琐。</p>
+
+    <h2>GitHub Flow</h2>
+    <p>GitHub Flow 极其简单：只有一个长期分支 <code>main</code>，所有功能都从 main 拉出 feature branch，开发完成后发起 Pull Request，审查通过后合并回 main，然后立即部署。</p>
+    <blockquote>如果你不能随时部署 main 分支，GitHub Flow 就不适合你。</blockquote>
+    <p>这个流程的前提是有完善的 CI/CD 和自动化测试。它更适合持续部署的 Web 服务。</p>
+
+    <h2>Trunk-Based Development</h2>
+    <p>比 GitHub Flow 更激进——所有人直接向主干（trunk/main）提交，feature branch 的生命周期不超过 1-2 天。用 feature flag 来控制功能是否对用户可见，而不是靠分支来隔离。</p>
+    <p>Google 和 Facebook 的大型代码库都采用这种方式。它对工程能力要求极高，但能最大限度地减少合并冲突。</p>
+
+    <h2>怎么选</h2>
+    <p>小团队、Web 应用、持续部署 → GitHub Flow。有版本发布节奏、需要并行维护多版本 → Git Flow。追求极致协作效率、工程基础设施完善 → Trunk-Based。大多数团队从 GitHub Flow 开始是个不错的选择。</p>
+    
+  </div>
+
+  <div class="post-nav"><a href="post-planning.html"><div class="label">← 上一篇</div>为什么我们总是高估自己能完成的事</a><a href="post-focus.html" style="text-align:right"><div class="label">下一篇 →</div>在噪音里保持专注</a></div>
+
+  <footer>
+    <span>© 2025 午后笔记</span>
+    <span><a href="#">GitHub</a>&nbsp;·&nbsp;<a href="#">邮件联系</a></span>
+  </footer>
+</div>
+</body>
+</html>
