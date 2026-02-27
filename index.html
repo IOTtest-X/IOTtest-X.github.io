@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>午后笔记</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --text: #1a1a1a;
+      --muted: #888;
+      --border: #e8e5e0;
+      --link: #555;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif SC', serif;
+      line-height: 1.8;
+      padding: 0 24px;
+    }
+
+    .container {
+      max-width: 660px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-name {
+      font-family: 'Lora', serif;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .site-desc {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    nav {
+      margin-top: 28px;
+      display: flex;
+      gap: 24px;
+    }
+
+    nav a {
+      font-size: 13px;
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--text);
+      border-bottom-color: var(--text);
+    }
+
+    /* Featured */
+    .featured {
+      background: #f3f1ee;
+      border-radius: 4px;
+      padding: 28px 32px;
+      margin: 52px 0 48px;
+    }
+
+    .featured-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .featured-title {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .featured-title a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .featured-title a:hover { color: var(--muted); }
+
+    .featured-excerpt {
+      font-size: 14px;
+      color: #666;
+      font-weight: 300;
+      line-height: 1.9;
+      margin-bottom: 14px;
+    }
+
+    .featured-date {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Post list */
+    .year-group { margin-bottom: 48px; }
+
+    .year-label {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 4px;
+    }
+
+    .post-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+
+    .post-item:last-child { border-bottom: none; }
+
+    .post-title {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      flex: 1;
+      transition: color 0.15s;
+    }
+    .post-title:hover { color: var(--muted); }
+
+    .post-tag {
+      display: inline-block;
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 1px 8px;
+      border-radius: 2px;
+      margin-left: 8px;
+      vertical-align: middle;
+      font-weight: 300;
+    }
+
+    .post-date {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+      font-weight: 300;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      header { padding: 52px 0 40px; }
+      .post-item { flex-direction: column; gap: 4px; }
+      footer { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div class="site-name">午后笔记</div>
+      <div class="site-desc">记录思考、技术与日常</div>
+      <nav>
+        <a href="#">文章</a>
+        <a href="#">归档</a>
+        <a href="#">关于</a>
+        <a href="#">RSS</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="featured">
+        <div class="featured-label">最新文章</div>
+        <div class="featured-title">
+          <a href="#">为什么我们总是高估自己能完成的事</a>
+        </div>
+        <div class="featured-excerpt">
+          计划谬误是一个古老的认知偏见——我们习惯于用最乐观的情景来预测未来，却忘了过去每一次类似项目都比预期更长、更难……
+        </div>
+        <div class="featured-date">2025 年 11 月 18 日</div>
+      </div>
+
+      <div class="year-group">
+        <div class="year-label">2025</div>
+        <div class="section-divider"></div>
+        <div class="post-item">
+          <a class="post-title" href="#">Git 工作流的几种选择与取舍<span class="post-tag">技术</span></a>
+          <span class="post-date">11 月 02 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">在噪音里保持专注</a>
+          <span class="post-date">10 月 15 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">读《置身事内》<span class="post-tag">阅读</span></a>
+          <span class="post-date">09 月 28 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">域名、SSL 与备案那些事<span class="post-tag">技术</span></a>
+          <span class="post-date">08 月 11 日</span>
+        </div>
+      </div>
+
+      <div class="year-group">
+        <div class="year-label">2024</div>
+        <div class="section-divider"></div>
+        <div class="post-item">
+          <a class="post-title" href="#">用 GitHub Pages 搭建个人站点<span class="post-tag">技术</span></a>
+          <span class="post-date">12 月 20 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">我的 2024 年度总结</a>
+          <span class="post-date">12 月 31 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">极简主义并不是拥有更少<span class="post-tag">思考</span></a>
+          <span class="post-date">09 月 05 日</span>
+        </div>
+        <div class="post-item">
+          <a class="post-title" href="#">SSH 免密登录原理与实践<span class="post-tag">技术</span></a>
+          <span class="post-date">05 月 17 日</span>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>© 2025 午后笔记</span>
+      <span>
+        <a href="#">GitHub</a>&nbsp;·&nbsp;
+        <a href="#">邮件联系</a>
+      </span>
+    </footer>
+
+  </div>
+</body>
+</html>
